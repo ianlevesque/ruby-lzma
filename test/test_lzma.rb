@@ -1,5 +1,5 @@
-#!/usr/bin/env ruby -I../ext -I../lib
 #!/opt/local/bin/jruby -I../java
+#!/usr/bin/env ruby -I../ext -I../lib
 # Ruby/JRuby LZMA
 # This code, like the LZMA SDK, is public domain.
 
