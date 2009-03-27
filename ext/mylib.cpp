@@ -40,7 +40,7 @@ void *lzma_compress(const void *ptr, int size, int *sp){
   if(!rbuf) return NULL;
   size_t osiz;
   if(LzmaRamEncode((Byte*)ptr, size, (Byte*)rbuf, rsiz, &osiz,
-                   1 << 23, SZ_FILTER_AUTO) != 0){
+                   1 << 23, SZ_FILTER_NO) != 0){
     free(rbuf);
     return NULL;
   }

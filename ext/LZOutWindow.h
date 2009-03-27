@@ -16,7 +16,9 @@ public:
 };
 #endif
 */
+#ifndef _NO_EXCEPTIONS
 typedef COutBufferException CLZOutWindowException;
+#endif
 
 class CLZOutWindow: public COutBuffer
 {

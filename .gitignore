@@ -3,3 +3,4 @@ java/lzma_java.jar
 *.o
 *.bundle
 *.gem
+ext/Makefile

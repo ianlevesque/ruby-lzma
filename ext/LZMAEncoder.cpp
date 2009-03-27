@@ -58,7 +58,7 @@
 namespace NCompress {
 namespace NLZMA {
 
-const int kDefaultDictionaryLogSize = 20;
+const int kDefaultDictionaryLogSize = 22;
 const UInt32 kNumFastBytesDefault = 0x20;
 
 enum 

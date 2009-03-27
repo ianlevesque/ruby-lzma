@@ -5,6 +5,7 @@
 
 require "test/unit"
 require "lzma"
+require 'base64'
 
 class TestLzma < Test::Unit::TestCase
   def setup
@@ -17,8 +18,15 @@ class TestLzma < Test::Unit::TestCase
   
   def test_lzma_both_ways
     compressed = @lzma.compress("leroy was here")
-    
     assert_not_nil(compressed)
     assert_equal("leroy was here", @lzma.decompress(compressed))
+  end
+  
+  def test_decompress_both_encoders
+    java_compressed = Base64.decode64("XQAAQAAOAAAAAAAAAAA2GUqrt5owxRYShsh3Etc9r5jV/9OkAAA=")
+    assert_equal("leroy was here", @lzma.decompress(java_compressed))
+        
+    native_compressed = Base64.decode64("EXQAAgAAOAAAAAAAAAAA2GUqrt5owxRYShsh3EtbQeg4A")
+    assert_equal("leroy was here", @lzma.decompress(java_compressed))
   end
 end

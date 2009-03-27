@@ -106,7 +106,7 @@ int LzmaRamEncode(
   #endif
 
   *outSizeProcessed = 0;
-  const size_t kIdSize = 1;
+  const size_t kIdSize = 0;
   const size_t kLzmaPropsSize = 5;
   const size_t kMinDestSize = kIdSize + kLzmaPropsSize + 8;
   if (outSize < kMinDestSize)
@@ -142,8 +142,8 @@ int LzmaRamEncode(
   CMyComPtr<ISequentialInStream> inStream = inStreamSpec;
 
   outStreamSpec->Init(outBuffer, outSize);
-  if (outStreamSpec->WriteByte(0) != S_OK)
-    return SZE_OUT_OVERFLOW;
+  // if (outStreamSpec->WriteByte(0) != S_OK)
+  //   return SZE_OUT_OVERFLOW;
 
   if (encoderSpec->WriteCoderProperties(outStream) != S_OK)
     return SZE_OUT_OVERFLOW;
@@ -216,8 +216,8 @@ int LzmaRamEncode(
     } 
   }
   *outSizeProcessed = outStreamSpec->Pos;
-  if (bestIsFiltered)
-    outBuffer[0] = 1;
+  // if (bestIsFiltered)
+  //   outBuffer[0] = 1;
   if (useFilter)
     MyFree(filteredStream);
   return mainResult;

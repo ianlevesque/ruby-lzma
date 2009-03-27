@@ -9,8 +9,8 @@
 #include "BranchX86.h"
 #endif
 
-#define LZMA_PROPS_SIZE 14
-#define LZMA_SIZE_OFFSET 6
+#define LZMA_PROPS_SIZE 13
+#define LZMA_SIZE_OFFSET 5
 
 int LzmaRamGetUncompressedSize(
     const unsigned char *inBuffer, 
@@ -45,17 +45,17 @@ int LzmaRamDecompress(
   int result;
   SizeT outSizeProcessedLoc;
   SizeT inProcessed;
-  int useFilter;
+  int useFilter = 0;
   
   if (inSize < LZMA_PROPS_SIZE)
     return 1;
-  useFilter = inBuffer[0];
+  // useFilter = inBuffer[0];
 
   *outSizeProcessed = 0;
   if (useFilter > 1)
     return 1;
 
-  if (LzmaDecodeProperties(&state.Properties, inBuffer + 1, LZMA_PROPERTIES_SIZE) != LZMA_RESULT_OK)
+  if (LzmaDecodeProperties(&state.Properties, inBuffer, LZMA_PROPERTIES_SIZE) != LZMA_RESULT_OK)
     return 1;
   state.Probs = (CProb *)allocFunc(LzmaGetNumProbs(&state.Properties) * sizeof(CProb));
   if (state.Probs == 0)
