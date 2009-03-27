@@ -2,3 +2,4 @@ java/lzma_java.jar
 *.class
 *.o
 *.bundle
+*.gem
