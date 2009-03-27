@@ -16,3 +16,5 @@ task :jar => [:compile] do
     sh "jar -cf lzma_java.jar com/ephemeronindustries/lzma/*.class SevenZip/Compression/LZ/*.class SevenZip/Compression/LZMA/*.class SevenZip/Compression/RangeCoder/*.class"
   end
 end
+
+task :default => :jar
