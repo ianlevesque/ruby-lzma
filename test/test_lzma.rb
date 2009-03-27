@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby -I../ext
+#!/usr/bin/env ruby -I../ext -I../lib
 #!/opt/local/bin/jruby -I../java
 # Ruby/JRuby LZMA
 # This code, like the LZMA SDK, is public domain.
@@ -17,6 +17,7 @@ class TestLzma < Test::Unit::TestCase
   
   def test_lzma_both_ways
     compressed = @lzma.compress("leroy was here")
+    puts compressed.to_hex
     assert_not_nil(compressed)
     assert_equal("leroy was here", @lzma.decompress(compressed))
   end

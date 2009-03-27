@@ -1,15 +1,16 @@
 #include "ruby.h"
 #include "lzmalib.h"
+#include "stdlib.h"
 
 VALUE cLZMA;
 
-static VALUE lz_compress(VALUE data) {
+static VALUE lz_compress(VALUE self, VALUE data) {
 	VALUE result = Qnil;
 	
 	if(data != Qnil) {
 		void *data_ptr = RSTRING_PTR(data);
 		int data_len = RSTRING_LEN(data);
-		
+			
 		int out_size;
 		void *out_buffer = lzma_compress(data_ptr, data_len, &out_size);
 
@@ -20,7 +21,7 @@ static VALUE lz_compress(VALUE data) {
 	return result;
 }
 
-static VALUE lz_decompress(VALUE data) {
+static VALUE lz_decompress(VALUE self, VALUE data) {
 	VALUE result = Qnil;
 	
 	if(data != Qnil) {
@@ -32,6 +33,8 @@ static VALUE lz_decompress(VALUE data) {
 		
 		if(out_buffer) {
 			result = rb_str_new((char*)out_buffer, out_size);
+		} else {
+			rb_raise(rb_eRuntimeError, "Couldn't decompress with LZMA");
 		}
 	}
 	
