@@ -46,7 +46,7 @@ INCFLAGS = -I. -I$(topdir) -I$(hdrdir) -I$(srcdir)
 CPPFLAGS =  
 CXXFLAGS = $(CFLAGS) 
 DLDFLAGS = -L. -arch ppc -arch i386  
-LDSHARED = cc -arch ppc -arch i386 -pipe -bundle -undefined dynamic_lookup
+LDSHARED = $(CXX) -arch ppc -arch i386 -pipe -bundle -undefined dynamic_lookup
 AR = ar
 EXEEXT = 
 

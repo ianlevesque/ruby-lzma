@@ -14,8 +14,10 @@ static VALUE lz_compress(VALUE self, VALUE data) {
 		int out_size;
 		void *out_buffer = lzma_compress(data_ptr, data_len, &out_size);
 
-		if(out_buffer)
+		if(out_buffer) {
 		  result = rb_str_new((char*)out_buffer, out_size);
+			lzma_free(out_buffer);
+		}
 	}
 	
 	return result;
@@ -33,6 +35,7 @@ static VALUE lz_decompress(VALUE self, VALUE data) {
 		
 		if(out_buffer) {
 			result = rb_str_new((char*)out_buffer, out_size);
+			lzma_free(out_buffer);
 		} else {
 			rb_raise(rb_eRuntimeError, "Couldn't decompress with LZMA");
 		}
