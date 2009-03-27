@@ -5,9 +5,7 @@
 
 #include "MyWindows.h"
 
-#ifndef RINOK
-#define RINOK(x) { HRESULT __result_ = (x); if (__result_ != S_OK) return __result_; }
-#endif
+#define RINOK(x) { HRESULT __result_ = (x); if(__result_ != S_OK) return __result_; }
 
 template <class T>
 class CMyComPtr
@@ -28,11 +26,11 @@ public:
   // T& operator*() const {  return *_p; }
   T** operator&() { return &_p; }
   T* operator->() const { return _p; }
-  T* operator=(T* p)
-  {
+  T* operator=(T* p) 
+  { 
     if (p != 0)
       p->AddRef();
-    if (_p)
+    if (_p) 
       _p->Release();
     _p = p;
     return p;
@@ -78,18 +76,12 @@ public:
 
 //////////////////////////////////////////////////////////
 
-inline HRESULT StringToBstr(LPCOLESTR src, BSTR *bstr)
-{
-  *bstr = ::SysAllocString(src);
-  return (*bstr != 0) ? S_OK : E_OUTOFMEMORY;
-}
-
 class CMyComBSTR
 {
 public:
   BSTR m_str;
-  CMyComBSTR(): m_str(NULL) {}
-  CMyComBSTR(LPCOLESTR src) { m_str = ::SysAllocString(src); }
+  CMyComBSTR() { m_str = NULL; }
+  CMyComBSTR(LPCOLESTR pSrc) {  m_str = ::SysAllocString(pSrc);  }
   // CMyComBSTR(int nSize) { m_str = ::SysAllocStringLen(NULL, nSize); }
   // CMyComBSTR(int nSize, LPCOLESTR sz) { m_str = ::SysAllocStringLen(sz, nSize);  }
   CMyComBSTR(const CMyComBSTR& src) { m_str = src.MyCopy(); }
@@ -113,31 +105,29 @@ public:
     }
     return *this;
   }
-  CMyComBSTR& operator=(LPCOLESTR src)
+  CMyComBSTR& operator=(LPCOLESTR pSrc)
   {
     ::SysFreeString(m_str);
-    m_str = ::SysAllocString(src);
+    m_str = ::SysAllocString(pSrc);
     return *this;
   }
   unsigned int Length() const { return ::SysStringLen(m_str); }
   operator BSTR() const { return m_str; }
   BSTR* operator&() { return &m_str; }
-  BSTR MyCopy() const
-  {
+  BSTR MyCopy() const 
+  { 
     int byteLen = ::SysStringByteLen(m_str);
     BSTR res = ::SysAllocStringByteLen(NULL, byteLen);
-    memcpy(res, m_str, byteLen);
+    memmove(res, m_str, byteLen);
     return res;
   }
-  /*
-  void Attach(BSTR src) { m_str = src; }
+  void Attach(BSTR src) {  m_str = src; }
   BSTR Detach()
   {
     BSTR s = m_str;
     m_str = NULL;
     return s;
   }
-  */
   void Empty()
   {
     ::SysFreeString(m_str);
@@ -145,6 +135,7 @@ public:
   }
   bool operator!() const {  return (m_str == NULL); }
 };
+
 
 //////////////////////////////////////////////////////////
 
@@ -156,17 +147,10 @@ public:
 };
 
 #define MY_QUERYINTERFACE_BEGIN STDMETHOD(QueryInterface) \
-    (REFGUID iid, void **outObject) {
+    (REFGUID iid, void **outObject) { 
 
 #define MY_QUERYINTERFACE_ENTRY(i) if (iid == IID_ ## i) \
     { *outObject = (void *)(i *)this; AddRef(); return S_OK; }
-
-#define MY_QUERYINTERFACE_ENTRY_UNKNOWN(i) if (iid == IID_IUnknown) \
-    { *outObject = (void *)(IUnknown *)(i *)this; AddRef(); return S_OK; }
-
-#define MY_QUERYINTERFACE_BEGIN2(i) MY_QUERYINTERFACE_BEGIN \
-    MY_QUERYINTERFACE_ENTRY_UNKNOWN(i) \
-    MY_QUERYINTERFACE_ENTRY(i)
 
 #define MY_QUERYINTERFACE_END return E_NOINTERFACE; }
 
@@ -182,31 +166,26 @@ STDMETHOD_(ULONG, Release)() { if (--__m_RefCount != 0)  \
   MY_ADDREF_RELEASE
 
 
-#define MY_UNKNOWN_IMP MY_QUERYINTERFACE_BEGIN \
-  MY_QUERYINTERFACE_ENTRY_UNKNOWN(IUnknown) \
+#define MY_UNKNOWN_IMP STDMETHOD(QueryInterface)(REFGUID, void **) { \
   MY_QUERYINTERFACE_END \
   MY_ADDREF_RELEASE
 
 #define MY_UNKNOWN_IMP1(i) MY_UNKNOWN_IMP_SPEC( \
-  MY_QUERYINTERFACE_ENTRY_UNKNOWN(i) \
   MY_QUERYINTERFACE_ENTRY(i) \
   )
 
 #define MY_UNKNOWN_IMP2(i1, i2) MY_UNKNOWN_IMP_SPEC( \
-  MY_QUERYINTERFACE_ENTRY_UNKNOWN(i1) \
   MY_QUERYINTERFACE_ENTRY(i1) \
   MY_QUERYINTERFACE_ENTRY(i2) \
   )
 
 #define MY_UNKNOWN_IMP3(i1, i2, i3) MY_UNKNOWN_IMP_SPEC( \
-  MY_QUERYINTERFACE_ENTRY_UNKNOWN(i1) \
   MY_QUERYINTERFACE_ENTRY(i1) \
   MY_QUERYINTERFACE_ENTRY(i2) \
   MY_QUERYINTERFACE_ENTRY(i3) \
   )
 
 #define MY_UNKNOWN_IMP4(i1, i2, i3, i4) MY_UNKNOWN_IMP_SPEC( \
-  MY_QUERYINTERFACE_ENTRY_UNKNOWN(i1) \
   MY_QUERYINTERFACE_ENTRY(i1) \
   MY_QUERYINTERFACE_ENTRY(i2) \
   MY_QUERYINTERFACE_ENTRY(i3) \
@@ -214,7 +193,6 @@ STDMETHOD_(ULONG, Release)() { if (--__m_RefCount != 0)  \
   )
 
 #define MY_UNKNOWN_IMP5(i1, i2, i3, i4, i5) MY_UNKNOWN_IMP_SPEC( \
-  MY_QUERYINTERFACE_ENTRY_UNKNOWN(i1) \
   MY_QUERYINTERFACE_ENTRY(i1) \
   MY_QUERYINTERFACE_ENTRY(i2) \
   MY_QUERYINTERFACE_ENTRY(i3) \

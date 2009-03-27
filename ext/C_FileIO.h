@@ -30,7 +30,6 @@ class CInFile: public CFileBase
 {
 public:
   bool Open(const char *name);
-  bool OpenShared(const char *name, bool shareForWrite);
   ssize_t Read(void *data, size_t size);
 };
 
@@ -38,7 +37,6 @@ class COutFile: public CFileBase
 {
 public:
   bool Create(const char *name, bool createAlways);
-  bool Open(const char *name, DWORD creationDisposition);
   ssize_t Write(const void *data, size_t size);
 };
 
