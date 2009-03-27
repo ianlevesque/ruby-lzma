@@ -17,7 +17,7 @@ class TestLzma < Test::Unit::TestCase
   
   def test_lzma_both_ways
     compressed = @lzma.compress("leroy was here")
-    puts compressed.to_hex
+    
     assert_not_nil(compressed)
     assert_equal("leroy was here", @lzma.decompress(compressed))
   end
