@@ -28,7 +28,6 @@ public class LZMA {
 		ByteArrayInputStream inStream = new ByteArrayInputStream(buffer);
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 		
-		encoder.SetEndMarkerMode(true); // ???
 		encoder.WriteCoderProperties(outStream);
 		long fileSize = buffer.length;
 		for (int i = 0; i < 8; i++)
