@@ -6,10 +6,10 @@
 
 ### Compressing String Data:
   
-  require 'lzma'
-  compressed = LZMA.compress('data to compress')
+    require 'lzma'
+    compressed = LZMA.compress('data to compress')
 
 ### Decompressing String Data:
 
-  require 'lzma'
-  decompressed = LZMA.decompress(File.read("compressed.lzma"))
+    require 'lzma'
+    decompressed = LZMA.decompress(File.read("compressed.lzma"))
