@@ -21,3 +21,12 @@ else
     end
   end
 end
+
+class LZMA
+  def self.decompress(data)
+    LZMA.new.decompress(data)
+  end
+  def self.compress(data)
+    LZMA.new.compress(data)
+  end
+end
