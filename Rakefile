@@ -28,6 +28,7 @@ else
     end
   end
 end
+
 task :default => :test
 
 Rake::TestTask.new(:test) do |t|
@@ -36,3 +37,17 @@ Rake::TestTask.new(:test) do |t|
 end
 
 task :test => :compile
+
+begin
+  require 'jeweler'
+  Jeweler::Tasks.new do |gemspec|
+    gemspec.name = "ruby-lzma"
+    gemspec.summary = "Simple ruby and jruby wrappers for LZMA compression and decompression."
+    gemspec.description = "A different and possibly longer explanation of"
+    gemspec.email = "ian@ianlevesque.org"
+    gemspec.homepage = "http://github.com/ianlevesque/ruby-lzma"
+    gemspec.authors = ["Ian Levesque"]
+  end
+rescue LoadError
+  puts "Jeweler not available. Install it with: gem install jeweler"
+end
