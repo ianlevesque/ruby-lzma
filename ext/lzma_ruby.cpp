@@ -8,7 +8,7 @@ static VALUE lz_compress(VALUE self, VALUE data) {
 	VALUE result = Qnil;
 	
 	if(data != Qnil) {
-		void *data_ptr = RSTRING_PTR(data);
+		const void *data_ptr = RSTRING_PTR(data);
 		int data_len = RSTRING_LEN(data);
 			
 		int out_size;
@@ -27,7 +27,7 @@ static VALUE lz_decompress(VALUE self, VALUE data) {
 	VALUE result = Qnil;
 	
 	if(data != Qnil) {
-		void *data_ptr = RSTRING_PTR(data);
+		const void *data_ptr = RSTRING_PTR(data);
 		int len = RSTRING_LEN(data);
 		
 		int out_size;
