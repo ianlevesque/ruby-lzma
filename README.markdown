@@ -1,7 +1,6 @@
 # LZMA Ruby bindings
 
-Simple LZMA compression and decompression routines.  No features to speak of presently.  Works in Ruby 1.8.6+ and JRuby, with compatibility between the two and
-with other LZMA implementations.
+Simple LZMA compression and decompression routines.  No features to speak of presently.  Works in Ruby 1.8.6+, Ruby 1.9.1+, JRuby 1.4.1+, and MacRuby 0.6+.  All versions are compatible with each other, and with other LZMA implementations.
 
 Send questions to <mailto:ian@ianlevesque.org>
 
@@ -18,6 +17,10 @@ OR
 ### Installation (JRuby)
 
     jruby -S gem install ruby-lzma
+    
+### Installation (MacRuby)
+
+    macgem install ruby-lzma
 
 ## Examples
 
